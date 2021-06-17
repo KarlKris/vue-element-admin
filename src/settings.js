@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: 'Vue Element Admin',
 
   /**
    * @type {boolean} true | false
@@ -12,5 +12,10 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false
+  sidebarLogo: false,
+
+  /**
+   * 超时时间 毫秒(2分钟)
+   */
+  timeout: 120000
 }

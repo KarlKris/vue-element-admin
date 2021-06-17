@@ -33,59 +33,42 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
+    meta: { title: 'login', noCache: true },
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true,
+    sort: 1
   },
 
   {
     path: '/404',
     component: () => import('@/views/404'),
-    hidden: true
+    hidden: true,
+    sort: 2
   },
 
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    sort: 3,
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'dashboard', icon: 'dashboard' }
     }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
   },
 
   {
     path: '/form',
     component: Layout,
+    sort: 5,
     children: [
       {
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: 'form', icon: 'form' }
       }
     ]
   },
@@ -95,6 +78,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
+    sort: 6,
     meta: {
       title: 'Nested',
       icon: 'nested'
@@ -104,31 +88,31 @@ export const constantRoutes = [
         path: 'menu1',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
         name: 'Menu1',
-        meta: { title: 'Menu1' },
+        meta: { title: 'menu1' },
         children: [
           {
             path: 'menu1-1',
             component: () => import('@/views/nested/menu1/menu1-1'),
             name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
+            meta: { title: 'menu1-1' }
           },
           {
             path: 'menu1-2',
             component: () => import('@/views/nested/menu1/menu1-2'),
             name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
+            meta: { title: 'menu1-2' },
             children: [
               {
                 path: 'menu1-2-1',
                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
+                meta: { title: 'menu1-2-1' }
               },
               {
                 path: 'menu1-2-2',
                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
+                meta: { title: 'menu1-2-2' }
               }
             ]
           },
@@ -136,7 +120,7 @@ export const constantRoutes = [
             path: 'menu1-3',
             component: () => import('@/views/nested/menu1/menu1-3'),
             name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
+            meta: { title: 'menu1-3' }
           }
         ]
       },
@@ -147,21 +131,7 @@ export const constantRoutes = [
         meta: { title: 'menu2' }
       }
     ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  }
 ]
 
 const createRouter = () => new Router({
@@ -177,5 +147,50 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
+
+export const asyncRouters = [
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/table',
+    name: 'Example',
+    sort: 4,
+    meta: { roles: ['xxx'], title: 'example', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/table/index'),
+        meta: { title: 'table', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'tree', icon: 'tree' }
+      }
+    ]
+  },
+  // 系统配置
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noRedirect',
+    sort: 8,
+    name: 'System',
+    meta: { roles: ['system'], title: 'system', icon: 'el-icon-setting'},
+    children: [
+      {
+        path: 'operator',
+        name: 'Operator',
+        component: () => import('@views/operator/index'),
+        meta: { roles: ['operator'], title: 'operator'}
+      }
+    ]
+
+  },
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true, sort: 9999 }
+]
 
 export default router
