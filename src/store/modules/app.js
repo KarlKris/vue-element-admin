@@ -8,8 +8,7 @@ const state = {
   },
   device: 'desktop',
   language: getLanguage(),
-  size: Cookies.get('size') || 'medium',
-  operators: []
+  size: Cookies.get('size') || 'medium'
 }
 
 const mutations = {
@@ -37,9 +36,6 @@ const mutations = {
   SET_SIZE: (state, size) => {
     state.size = size
     Cookies.set('size', size)
-  },
-  SET_OPERATORS: (state, operators) => {
-    state.operators = operators
   }
 }
 
@@ -58,9 +54,6 @@ const actions = {
   },
   setSize({ commit }, size) {
     commit('SET_SIZE', size)
-  },
-  setOperators({ commit }, operators) {
-    commit('SET_OPERATORS', operators)
   }
 }
 

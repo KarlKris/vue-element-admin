@@ -66,7 +66,8 @@ export default {
 
     edit: '编辑',
     delete: '删除',
-    system: '系统应用'
+    system: '系统应用',
+    operatorSetting: '运营商配置'
   },
   navbar: {
     logOut: '退出登录',
@@ -94,6 +95,7 @@ export default {
     chargeKey: '充值key',
     whiteIps: '白名单ip',
     whiteAccounts: '白名单账号',
-    createTime: '创建时间'
+    createTime: '创建时间',
+    add: '添加运营商'
   }
 }

@@ -10,6 +10,6 @@ const getters = {
   permission_routes: state => state.permission.routes,
   addRouters: state => state.permission.addRouters,
   select_operator: state => state.user.select_operator,
-  operators: state => state.app.operators
+  operators: state => state.operator.operators
 }
 export default getters

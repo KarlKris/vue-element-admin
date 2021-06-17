@@ -134,20 +134,7 @@ export const constantRoutes = [
   }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
-
-const router = createRouter()
-
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
-}
-
+// 动态路由
 export const asyncRouters = [
   {
     path: '/example',
@@ -178,13 +165,14 @@ export const asyncRouters = [
     redirect: 'noRedirect',
     sort: 8,
     name: 'System',
-    meta: { roles: ['system'], title: 'system', icon: 'el-icon-setting'},
+    meta: { roles: ['system'], title: 'system', icon: 'el-icon-setting' },
+    alwaysShow: true,
     children: [
       {
         path: 'operator',
         name: 'Operator',
-        component: () => import('@views/operator/index'),
-        meta: { roles: ['operator'], title: 'operator'}
+        component: () => import('@/views/operator/index'),
+        meta: { roles: ['operator'], title: 'operatorSetting' }
       }
     ]
 
@@ -192,5 +180,19 @@ export const asyncRouters = [
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true, sort: 9999 }
 ]
+
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
+})
+
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

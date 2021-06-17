@@ -31,6 +31,7 @@ const mutations = {
     state.functions = functions
   },
   SET_OPERATOR: (state, operator) => {
+    console.log(operator)
     state.select_operator = operator
   }
 }
@@ -98,7 +99,6 @@ const actions = {
       resolve()
     })
   }
-
 }
 
 export default {

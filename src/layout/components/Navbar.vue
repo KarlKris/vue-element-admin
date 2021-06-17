@@ -17,10 +17,9 @@
             :key="item.id"
             :label="item.name"
             :value="item.id"
-          >
-          </el-option>
+          />
         </el-select>
-     </div>
+      </div>
 
       <template v-if="device !== 'mobile'">
         <el-tooltip
@@ -35,7 +34,7 @@
       </template>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -54,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState, mapMutations } from 'vuex'
 import { getOperatorInfos } from '@/api/operator'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
@@ -69,13 +68,9 @@ export default {
     LangSelect,
     Hamburger
   },
-  data() {
-    return {
-      operators: []
-    }
-  },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'device', 'select_operator', 'operators'])
+    ...mapGetters(['sidebar', 'avatar', 'device', 'operators']),
+    ...mapState(['select_operator'])
   },
   created() {
     // 获取运营商
@@ -92,9 +87,10 @@ export default {
     getOperators() {
       getOperatorInfos().then(res => {
         console.log(res)
-        this.$store.dispatch('app/setOperators', res)
+        this.$store.dispatch('SetOperators', res)
       })
-    }
+    },
+    ...mapMutations({ select_operator: 'SET_OPERATOR' })
   }
 }
 </script>
