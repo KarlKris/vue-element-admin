@@ -11,7 +11,7 @@
     <div class="right-menu">
 
       <div class="right-menu-item">
-        <el-select v-model="select_operator" filterable :placeholder="$t('please.select')">
+        <el-select v-model="select_operator" filterable :placeholder="$t('please.select')" change="selectOperator">
           <el-option
             v-for="item in operators"
             :key="item.id"
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 import { getOperatorInfos } from '@/api/operator'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
@@ -70,7 +70,19 @@ export default {
   },
   computed: {
     ...mapGetters(['sidebar', 'avatar', 'device', 'operators']),
-    ...mapState(['select_operator'])
+    select_operator: {
+      get() {
+        var id = this.$store.state.user.select_operator
+        if (id) {
+          return parseInt(id)
+        }
+        return id
+      },
+      set(val) {
+        this.$store.dispatch('SelectOperator', val)
+      }
+
+    }
   },
   created() {
     // 获取运营商
@@ -89,8 +101,7 @@ export default {
         console.log(res)
         this.$store.dispatch('SetOperators', res)
       })
-    },
-    ...mapMutations({ select_operator: 'SET_OPERATOR' })
+    }
   }
 }
 </script>

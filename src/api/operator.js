@@ -14,3 +14,19 @@ export function addOperator(data) {
     data
   })
 }
+
+export function editOperator(data) {
+  return request({
+    url: 'operator/modify',
+    method: 'put',
+    data
+  })
+}
+
+export function deleteOperator(data) {
+  return request({
+    url: 'operator/delete',
+    method: 'delete',
+    data
+  })
+}

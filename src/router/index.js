@@ -53,7 +53,7 @@ export const constantRoutes = [
     sort: 3,
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'dashboard', icon: 'dashboard' }
     }]

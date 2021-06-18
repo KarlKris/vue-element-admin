@@ -93,9 +93,9 @@ const actions = {
   },
 
   // select operator
-  SelectOperator({ commit }) {
+  SelectOperator({ commit }, select_operator) {
     return new Promise(resolve => {
-      commit('SET_OPERATOR')
+      commit('SET_OPERATOR', select_operator)
       resolve()
     })
   }
