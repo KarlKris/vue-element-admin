@@ -74,11 +74,25 @@ export const constantRoutes = [
   },
 
   {
+    path: '/socket',
+    component: Layout,
+    sort: 6,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/socket/index'),
+        meta: { title: 'socket', icon: 'form' }
+      }
+    ]
+  },
+
+  {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
-    sort: 6,
+    sort: 7,
     meta: {
       title: 'Nested',
       icon: 'nested'

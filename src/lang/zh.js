@@ -69,7 +69,8 @@ export default {
     system: '系统应用',
     operatorSetting: '运营商配置',
     confirm: '确认',
-    cancel: '取消'
+    cancel: '取消',
+    socket: 'websocket'
   },
   navbar: {
     logOut: '退出登录',
