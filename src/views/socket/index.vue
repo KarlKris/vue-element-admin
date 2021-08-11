@@ -1,6 +1,8 @@
 <template>
   <div>
     <button @click="send">发消息</button>
+    <button @click="create">创建账号</button>
+    <button @click="login">登录</button>
   </div>
 </template>
 
@@ -8,8 +10,9 @@
 export default {
   data() {
     return {
-      path: 'wss://192.168.11.65:8088',
-      socket: ''
+      path: 'ws://192.168.11.65:8088',
+      socket: '',
+      sn: 0n
     }
   },
   mounted() {
@@ -62,8 +65,88 @@ export default {
       dataView.setInt8(14, 0)
       this.socket.send(buffer)
     },
+    create: function() {
+      const data = {
+        account: 'yuanwen',
+        timestamp: 1628676236,
+        serverId: 10,
+        channel: 1,
+        sign: '10deeef2435cf9365b15e61ceea433c2'
+      }
+      const bytes = this.toUTF8(JSON.stringify(data))
+      const bodyLength = bytes.length
+
+      const totalLength = 18 + 2 + bodyLength
+      const buffer = new ArrayBuffer(totalLength)
+      const dataView = new DataView(buffer)
+
+      dataView.setInt16(0, 8)
+      dataView.setInt32(2, totalLength - 6)
+      dataView.setBigInt64(6, this.getAndInc())
+      dataView.setInt8(14, 24)
+      dataView.setInt16(15, 1)
+      dataView.setInt8(17, 1)
+      dataView.setInt16(18, bodyLength)
+      for (var i = 0; i < bodyLength; i++) {
+        const j = 20 + i
+        dataView.setUint8(j, bytes[i])
+      }
+      this.socket.send(buffer)
+    },
+    login: function() {
+      const data = {
+        account: 'yuanwen',
+        timestamp: 1628676236,
+        serverId: 10,
+        channel: 1,
+        sign: '10deeef2435cf9365b15e61ceea433c2'
+      }
+      const bytes = this.toUTF8(JSON.stringify(data))
+      const bodyLength = bytes.length
+
+      console.log(bytes)
+
+      const totalLength = 18 + 2 + bodyLength
+      const buffer = new ArrayBuffer(totalLength)
+      const dataView = new DataView(buffer)
+
+      dataView.setInt16(0, 8)
+      dataView.setInt32(2, totalLength - 6)
+      dataView.setBigInt64(6, this.getAndInc())
+      dataView.setInt8(14, 24)
+      dataView.setInt16(15, 1)
+      dataView.setInt8(17, 1)
+      dataView.setInt16(18, bodyLength)
+      for (var i = 0; i < bodyLength; i++) {
+        const j = 20 + i
+        dataView.setUint8(j, bytes[i])
+      }
+      this.socket.send(buffer)
+    },
     close: function() {
       console.log('socket已经关闭')
+    },
+    toUTF8: function(str) {
+      var result = []
+      var k = 0
+      for (var i = 0; i < str.length; i++) {
+        var j = encodeURI(str[i])
+        if (j.length === 1) {
+          // 未转换的字符
+          result[k++] = j.charCodeAt(0)
+        } else {
+          // 转换成%XX形式的字符
+          var bytes = j.split('%')
+          for (var l = 1; l < bytes.length; l++) {
+            result[k++] = parseInt('0x' + bytes[l])
+          }
+        }
+      }
+      return result
+    },
+    getAndInc: function() {
+      this.sn++
+      return this.sn
     }
   }
 }
