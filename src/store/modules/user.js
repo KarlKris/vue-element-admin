@@ -8,7 +8,7 @@ const getDefaultState = () => {
     name: '',
     avatar: '',
     functions: [],
-    select_operator: ''
+    select_channel: ''
   }
 }
 
@@ -30,9 +30,9 @@ const mutations = {
   SET_FUNCTIONS: (state, functions) => {
     state.functions = functions
   },
-  SET_OPERATOR: (state, operator) => {
-    console.log(operator)
-    state.select_operator = operator
+  SET_CHANNEL: (state, channel) => {
+    console.log(channel)
+    state.select_channel = channel
   }
 }
 
@@ -93,9 +93,9 @@ const actions = {
   },
 
   // select operator
-  SelectOperator({ commit }, select_operator) {
+  SelectChannel({ commit }, select_channel) {
     return new Promise(resolve => {
-      commit('SET_OPERATOR', select_operator)
+      commit('SET_OPERATOR', select_channel)
       resolve()
     })
   }

@@ -67,7 +67,7 @@ export default {
     edit: '编辑',
     delete: '删除',
     system: '系统应用',
-    operatorSetting: '运营商配置',
+    channelSetting: '渠道配置',
     confirm: '确认',
     cancel: '取消',
     socket: 'websocket'
@@ -91,15 +91,15 @@ export default {
     select: '请选择',
     keyWord: '输入关键字搜索'
   },
-  operator: {
-    id: '运营商标识',
-    name: '运营商名称',
+  channel: {
+    id: '渠道标识',
+    name: '渠道名称',
     loginKey: '登录key',
     chargeKey: '充值key',
     whiteIps: '白名单ip',
     whiteAccounts: '白名单账号',
     createTime: '创建时间',
-    add: '添加运营商',
-    edit: '编辑运营商'
+    add: '添加渠道',
+    edit: '编辑渠道'
   }
 }

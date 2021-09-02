@@ -23,7 +23,7 @@ export default {
       newAccount: '',
       oldAccount: '',
       key: 'GAME-FRAMEWORK-GATEWAY',
-      chatMsg: '',
+      chatMsg: '消息框\n',
       receive: undefined,
       receiveIndex: 0,
       protocolHeader: new DataView(new ArrayBuffer(6)),
@@ -61,6 +61,7 @@ export default {
       console.log('连接错误')
     },
     getMessage: function(msg) {
+      console.log('----------receive start-----------------')
       // 本次接收的数据
       const data = new DataView(new Uint8Array(msg.data).buffer)
       // 本次接收的数据长度
@@ -113,15 +114,19 @@ export default {
 
         // 判断数据是否完整
         if (lastReceiveLength <= this.receiveIndex) {
-          this.handle()
-          this.protocolHeaderIndex = 0
-          this.receiveIndex = 0
-          this.receive = undefined
+          try {
+            this.handle()
+          } finally {
+            this.protocolHeaderIndex = 0
+            this.receiveIndex = 0
+            this.receive = undefined
+          }
         }
       }
-      console.log('---------------------------')
+      console.log('----------receive end-----------------')
     },
     handle: function() {
+      console.log('----------handle start-----------------')
       var i = 0
       const data = this.receive
       console.log('本次消费的消息长度->' + data.byteLength)
@@ -138,20 +143,33 @@ export default {
         const command = data.getInt8(i)
         i += 1
         console.log('收到模块号：' + module + ',命令号：' + command)
-        if (data.byteLength > i && command === -1) {
-          const bodyLength = data.getInt16(i)
-          i += 2
-          const body = new Uint8Array(bodyLength)
-          for (var j = 0; j < bodyLength; j++) {
-            body[j] = data.getUint8(i++)
-          }
-
-          const str = String.fromCharCode.apply(null, body)
-          const json = JSON.stringify(str)
-          console.log(json)
-          const data = json.content
-          this.chatMsg.concat(data.senderId + ':' + data.content + '\n')
+        console.log(data)
+        if (i >= data.byteLength) {
+          return
         }
+
+        console.log(data)
+        const bodyLength = data.getInt16(i)
+        i += 2
+        const body = new Uint8Array(bodyLength)
+        for (var j = 0; j < bodyLength; j++) {
+          body[j] = data.getUint8(i++)
+        }
+
+        if (command === -1) {
+          const str = String.fromCharCode.apply(null, body)
+          const json = JSON.parse(str)
+          console.log(json)
+          const data = json['content']
+          console.log(data)
+          const d = data['content']
+          var msg = d.senderId + ':' + d.msg + '\n'
+          console.log(msg)
+          var lastMsg = this.chatMsg
+          this.chatMsg = lastMsg.concat(msg)
+          console.log(this.chatMsg)
+        }
+        console.log('----------handle end------------------')
       }
     },
     send: function() {

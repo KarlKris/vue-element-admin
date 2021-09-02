@@ -9,7 +9,7 @@ const getters = {
   functions: state => state.user.functions,
   permission_routes: state => state.permission.routes,
   addRouters: state => state.permission.addRouters,
-  select_operator: state => state.user.select_operator,
-  operators: state => state.operator.operators
+  select_channel: state => state.user.select_channel,
+  channels: state => state.channel.channels
 }
 export default getters

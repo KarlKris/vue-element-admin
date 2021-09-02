@@ -183,10 +183,10 @@ export const asyncRouters = [
     alwaysShow: true,
     children: [
       {
-        path: 'operator',
-        name: 'Operator',
-        component: () => import('@/views/operator/index'),
-        meta: { roles: ['operator'], title: 'operatorSetting' }
+        path: 'channel',
+        name: 'Channel',
+        component: () => import('@/views/channel/index'),
+        meta: { roles: ['channel'], title: 'channelSetting' }
       }
     ]
 

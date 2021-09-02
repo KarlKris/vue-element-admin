@@ -2,37 +2,37 @@
   <div>
     <div>
       <el-table
-        :data="operators.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+        :data="channels.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
         style="width: 100%"
       >
         <el-table-column
-          :label="$t('operator.id')"
+          :label="$t('channel.id')"
           prop="id"
         />
         <el-table-column
-          :label="$t('operator.name')"
+          :label="$t('channel.name')"
           prop="name"
         />
         <el-table-column
-          :label="$t('operator.loginKey')"
+          :label="$t('channel.loginKey')"
           prop="loginKey"
         />
         <el-table-column
-          :label="$t('operator.chargeKey')"
+          :label="$t('channel.chargeKey')"
           prop="chargeKey"
         />
         <el-table-column
-          :label="$t('operator.whiteIps')"
+          :label="$t('channel.whiteIps')"
           prop="whiteIps"
           :formatter="handleWhiteIps"
         />
         <el-table-column
-          :label="$t('operator.whiteAccounts')"
+          :label="$t('channel.whiteAccounts')"
           prop="whiteAccounts"
           :formatter="handlerWhiteAccounts"
         />
         <el-table-column
-          :label="$t('operator.createTime')"
+          :label="$t('channel.createTime')"
           prop="createTime"
           :formatter="transfromToDate"
         />
@@ -62,61 +62,61 @@
       </el-table>
     </div>
     <div>
-      <el-dialog :title="$t('operator.edit')" :visible.sync="editDialogFormVisible" label-position="left">
+      <el-dialog :title="$t('channel.edit')" :visible.sync="editDialogFormVisible" label-position="left">
         <el-form ref="editForm" status-icon :model="editForm" size="mini" :rules="rules">
-          <el-form-item :label="$t('operator.id')" :label-width="formLabelWidth" prop="id">
+          <el-form-item :label="$t('channel.id')" :label-width="formLabelWidth" prop="id">
             <el-input v-model.number="editForm.id" autocomplete="off" disabled />
           </el-form-item>
-          <el-form-item :label="$t('operator.name')" :label-width="formLabelWidth" prop="name">
+          <el-form-item :label="$t('channel.name')" :label-width="formLabelWidth" prop="name">
             <el-input v-model="editForm.name" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.loginKey')" :label-width="formLabelWidth" prop="loginKey">
+          <el-form-item :label="$t('channel.loginKey')" :label-width="formLabelWidth" prop="loginKey">
             <el-input v-model="editForm.loginKey" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.chargeKey')" :label-width="formLabelWidth" prop="chargeKey">
+          <el-form-item :label="$t('channel.chargeKey')" :label-width="formLabelWidth" prop="chargeKey">
             <el-input v-model="editForm.chargeKey" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.whiteIps')" :label-width="formLabelWidth">
+          <el-form-item :label="$t('channel.whiteIps')" :label-width="formLabelWidth">
             <el-input v-model="editForm.whiteIps" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.whiteAccounts')" :label-width="formLabelWidth">
+          <el-form-item :label="$t('channel.whiteAccounts')" :label-width="formLabelWidth">
             <el-input v-model="editForm.whiteAccounts" autocomplete="off" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="editDialogFormVisible = false">{{ $t("cancel") }}</el-button>
-          <el-button type="primary" @click="handleEditOperator">{{ $t("confirm") }}</el-button>
+          <el-button type="primary" @click="handleEditChannel">{{ $t("confirm") }}</el-button>
         </div>
       </el-dialog>
     </div>
     <div>
       <!-- Form -->
-      <el-button type="primary" @click="addDialogFormVisible = true">{{ $t('operator.add') }}</el-button>
+      <el-button type="primary" @click="addDialogFormVisible = true">{{ $t('channel.add') }}</el-button>
 
-      <el-dialog :title="$t('operator.add')" :visible.sync="addDialogFormVisible" label-position="left">
+      <el-dialog :title="$t('channel.add')" :visible.sync="addDialogFormVisible" label-position="left">
         <el-form ref="addForm" status-icon :model="addForm" size="mini" :rules="rules">
-          <el-form-item :label="$t('operator.id')" :label-width="formLabelWidth" prop="id">
+          <el-form-item :label="$t('channel.id')" :label-width="formLabelWidth" prop="id">
             <el-input v-model.number="addForm.id" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.name')" :label-width="formLabelWidth" prop="name">
+          <el-form-item :label="$t('channel.name')" :label-width="formLabelWidth" prop="name">
             <el-input v-model="addForm.name" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.loginKey')" :label-width="formLabelWidth" prop="loginKey">
+          <el-form-item :label="$t('channel.loginKey')" :label-width="formLabelWidth" prop="loginKey">
             <el-input v-model="addForm.loginKey" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.chargeKey')" :label-width="formLabelWidth" prop="chargeKey">
+          <el-form-item :label="$t('channel.chargeKey')" :label-width="formLabelWidth" prop="chargeKey">
             <el-input v-model="addForm.chargeKey" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.whiteIps')" :label-width="formLabelWidth">
+          <el-form-item :label="$t('channel.whiteIps')" :label-width="formLabelWidth">
             <el-input v-model="addForm.whiteIps" autocomplete="off" />
           </el-form-item>
-          <el-form-item :label="$t('operator.whiteAccounts')" :label-width="formLabelWidth">
+          <el-form-item :label="$t('channel.whiteAccounts')" :label-width="formLabelWidth">
             <el-input v-model="addForm.whiteAccounts" autocomplete="off" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addDialogFormVisible = false">{{ $t("cancel") }}</el-button>
-          <el-button type="primary" @click="handleAddOperator">{{ $t("confirm") }}</el-button>
+          <el-button type="primary" @click="handleAddChannel">{{ $t("confirm") }}</el-button>
         </div>
       </el-dialog>
     </div>
@@ -128,7 +128,7 @@ import { mapGetters } from 'vuex'
 import { dateFormat } from '@/utils/time'
 
 export default {
-  name: 'Operator',
+  name: 'Channel',
   data() {
     return {
       search: '',
@@ -153,11 +153,11 @@ export default {
       formLabelWidth: '100px',
       rules: {
         id: [
-          { required: true, message: '请输入运营商标识', trigger: 'blur' },
-          { type: 'number', message: '运营商标识必须为数字值' }
+          { required: true, message: '请输入渠道标识', trigger: 'blur' },
+          { type: 'number', message: '渠道标识必须为数字值' }
         ],
         name: [
-          { required: true, message: '请输入运营商名称', trigger: 'blur' }
+          { required: true, message: '请输入渠道名称', trigger: 'blur' }
         ],
         loginKey: [
           { required: true, message: '请输入登录秘钥', trigger: 'blur' }
@@ -169,7 +169,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['operators'])
+    ...mapGetters(['channels'])
   },
   methods: {
     handleEdit(index, row) {
@@ -184,7 +184,7 @@ export default {
     handleDelete(index, row) {
       console.log(index, row)
     },
-    handleAddOperator() {
+    handleAddChannel() {
       this.$refs.addForm.validate(valid => {
         if (valid) {
           var data = {
@@ -200,7 +200,7 @@ export default {
             data.whiteIps = JSON.parse(this.addForm.whiteAccounts)
           }
 
-          this.$store.dispatch('AddOperator', data).catch(error => {
+          this.$store.dispatch('AddChannel', data).catch(error => {
             console.log(error)
             return false
           })
@@ -210,7 +210,7 @@ export default {
         }
       })
     },
-    handleEditOperator() {
+    handleEditChannel() {
       this.$refs.editForm.validate(valid => {
         if (valid) {
           var data = {
@@ -226,7 +226,7 @@ export default {
             data.whiteIps = JSON.parse(this.editForm.whiteAccounts)
           }
 
-          this.$store.dispatch('EditOperator', data).catch(error => {
+          this.$store.dispatch('EditChannel', data).catch(error => {
             console.log(error)
             return false
           })

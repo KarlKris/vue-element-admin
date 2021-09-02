@@ -54,7 +54,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getOperatorInfos } from '@/api/operator'
+import { getChannelInfos } from '@/api/channel'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import SizeSelect from '@/components/SizeSelect'
@@ -69,24 +69,24 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'device', 'operators']),
-    select_operator: {
+    ...mapGetters(['sidebar', 'avatar', 'device', 'channels']),
+    select_channel: {
       get() {
-        var id = this.$store.state.user.select_operator
+        var id = this.$store.state.user.select_channel
         if (id) {
           return parseInt(id)
         }
         return id
       },
       set(val) {
-        this.$store.dispatch('SelectOperator', val)
+        this.$store.dispatch('SelectChannel', val)
       }
 
     }
   },
   created() {
-    // 获取运营商
-    this.getOperators()
+    // 获取渠道
+    this.getChannels()
   },
   methods: {
     toggleSideBar() {
@@ -96,10 +96,10 @@ export default {
       await this.$store.dispatch('Logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
-    getOperators() {
-      getOperatorInfos().then(res => {
+    getChannels() {
+      getChannelInfos().then(res => {
         console.log(res)
-        this.$store.dispatch('SetOperators', res)
+        this.$store.dispatch('SetChannels', res)
       })
     }
   }
