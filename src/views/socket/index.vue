@@ -6,6 +6,7 @@
     <button @click="create">创建账号</button>
     <el-input v-model="oldAccount" placeholder="请输入要登录的账号" />
     <button @click="login">登录</button>
+    <button @click="levelUp">升级</button>
     <el-input v-model="chatMsg" type="textarea" autosize />
   </div>
 </template>
@@ -163,7 +164,7 @@ export default {
           const data = json['content']
           console.log(data)
           const d = data['content']
-          var msg = d.senderId + ':' + d.msg + '\n'
+          var msg = d.accountVo.name + ':' + d.msg + '\n'
           console.log(msg)
           var lastMsg = this.chatMsg
           this.chatMsg = lastMsg.concat(msg)
@@ -273,6 +274,19 @@ export default {
         const j = 20 + i
         dataView.setUint8(j, bytes[i])
       }
+      this.socket.send(buffer)
+    },
+    levelUp: function() {
+      const totalLength = 18
+      const buffer = new ArrayBuffer(totalLength)
+      const dataView = new DataView(buffer)
+
+      dataView.setInt16(0, 8)
+      dataView.setInt32(2, totalLength - 6)
+      dataView.setBigInt64(6, this.getAndInc())
+      dataView.setInt8(14, 24)
+      dataView.setInt16(15, 5)
+      dataView.setInt8(17, 2)
       this.socket.send(buffer)
     },
     close: function() {
